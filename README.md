@@ -14,9 +14,9 @@ x2 = Node(5)
 
 # create computational graph and evaluate function value
 y = sub(add(log(x1), mul(x1, x2)), sin(x2))
+
+
 # perform reverse-mode autodiff
-
-
 reverse(y)
 
 
