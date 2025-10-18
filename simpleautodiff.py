@@ -15,7 +15,6 @@ class Node:
         self.operator = operator
         self.grad_wrt_parents = []
         self.partial_derivative = 0  
-        self.gradient = 0            # For reverse mode 
 
         if self.operator == "input":
             Node.input_count += 1
@@ -118,20 +117,20 @@ def reverse(rootNode):
     # 建立拓撲排序
     order = topological_order(rootNode)
     for node in order:
-        node.gradient = 0 #先初始化全部node
+        node.partial_derivative = 0 #先初始化全部node
 
 
-    rootNode.gradient = 1  # dy(root)/dy = 1
+    rootNode.partial_derivative = 1  # dy(root)/dy = 1
     # 反轉（由輸出往輸入）逐一傳遞
     for node in reversed(order):
         for i, parent in enumerate(node.parent_nodes):
-            old_gradient = parent.gradient
+            old_gradient = parent.partial_derivative
             #根據chain rule更新parent的gradient
-            parent.gradient += node.gradient * node.grad_wrt_parents[i]
+            parent.partial_derivative += node.partial_derivative * node.grad_wrt_parents[i]
 
             #print出執行狀況
             if Node.verbose:
                 print(f"d{rootNode.name}/d{parent.name} += "
                       f"(d{rootNode.name}/d{node.name}) * (d{node.name}/d{parent.name}) "
-                      f"= {old_gradient:.3f} + {node.gradient:.3f} * {node.grad_wrt_parents[i]:.3f} "
-                      f"-> {parent.gradient:.3f}")
+                      f"= {old_gradient:.3f} + {node.partial_derivative:.3f} * {node.grad_wrt_parents[i]:.3f} "
+                      f"-> {parent.partial_derivative:.3f}")
