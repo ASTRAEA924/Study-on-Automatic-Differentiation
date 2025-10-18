@@ -19,12 +19,12 @@ y = sub(add(log(x1), mul(x1, x2)), sin(x2))
 # perform reverse-mode autodiff
 reverse(y)
 
-
+#Output
 print("\nResults:")
 print(f"dy/dx1 = {x1.gradient:.6f}")
 print(f"dy/dx2 = {x2.gradient:.6f}")
 
-Output
+
 ```
 It first creates the computational graph 
 
