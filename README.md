@@ -6,20 +6,24 @@ We consider $y=\log(x_1)+x_1x_2-\sin(x_2)$ with $(x_1,x_2)=(2,5)$.
 ```python
 from simpleautodiff import *
 
+
 Node.verbose = True
 
-# create root nodes
+
+# Create root nodes
 x1 = Node(2)
 x2 = Node(5)
 
-# create computational graph and evaluate function value
+
+# Create computational graph and evaluate function value
 y = sub(add(log(x1), mul(x1, x2)), sin(x2))
 
 
-# perform reverse-mode autodiff
+# Perform reverse-mode autodiff
 reverse(y)
 
-#Output
+
+# Output
 print("\nResults:")
 print(f"dy/dx1 = {x1.gradient:.6f}")
 print(f"dy/dx2 = {x2.gradient:.6f}")
